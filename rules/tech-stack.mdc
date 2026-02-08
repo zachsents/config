@@ -1,0 +1,13 @@
+# Tech Stack Defaults
+
+⚪ These are the default choices unless stated otherwise:
+
+- **Runtime & package management:** Bun
+- **Full-stack React apps:** Vite + TanStack Start
+- **TanStack libraries by default:** Router, Query, Form, Table, Virtual, Pacer
+- **Backend:** Convex
+- **Linting:** oxlint
+- **Formatting:** Prettier
+- **Styling:** TailwindCSS
+- **Component primitives:** shadcn/ui
+- **Authentication:** Better-auth

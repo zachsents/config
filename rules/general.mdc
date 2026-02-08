@@ -1,0 +1,93 @@
+# General Coding Rules
+
+### Priority Levels
+
+- 🔴 **Hard rule** — must always be followed. No exceptions without explicit approval.
+- 🟡 **Strong preference** — default behavior; deviate only with a clear reason.
+- ⚪ **Guideline** — situational; use judgment.
+
+### Setup/Runtime
+- 🔴 Only ever use Bun as the package manager and runtime. This includes running scripts e.g. `bunx shadcn@latest add menu`
+
+### Research
+- 🟡 When using a library, always research the latest docs. I know you may be familiar with the library, but your knowledge is often out of date. 
+
+### Functions
+
+- 🟡 Use `function` declarations for top-level and exported functions. Use arrow functions for inline callbacks and closures.
+
+### Variables & Control Flow
+
+- 🟡 Prefer `const` unless mutation is intentional and required.
+- ⚪ Inline values used once unless it harms readability.
+- 🟡 Do not hoist magic values into constants unless they are reused or semantically meaningful.
+- 🟡 Avoid deep nesting. Extract small, pure helpers when helpful.
+- 🟡 Be wary of variables that exist only due to iterative edits. Re-evaluate which variables actually need to exist and simplify aggressively.
+
+### Concurrency
+
+- 🟡 Use `Promise.all` when possible to speed things up.
+
+### Imports & Exports
+
+- 🔴 Always remove unused imports.
+- 🔴 Never separate an `export` statement from its declaration.
+
+### Error Handling
+
+- 🟡 Use `try/catch` very sparingly.
+- 🟡 Only use it when meaningful work needs to happen in response to an error.
+- 🔴 Do not use `try/catch` just to swallow errors or re-log them.
+
+### Linting & Formatting
+
+- 🔴 Every project must have these four package scripts:
+	- `lint` — run the linter
+	- `format` — run the formatter
+	- `fix` — lint with auto-fix + format
+	- `check` — type-check + fix (`tsc --noEmit && bun run fix`)
+- 🔴 After edits, always run `bun run check` until the output is clean.
+- 🔴 Never silence lints with directive comments. If you think this is necessary, stop and ask first.
+- 🔴 Never fix lints manually that the linter can auto-fix.
+
+### Documentation & Comments
+
+- 🟡 Comment only when intent is not obvious from code.
+- 🟡 Prefer self-explanatory code through naming and structure.
+- 🔴 Never comment obvious behavior (e.g. "increment counter").
+- 🔴 If you break any of the coding rules, leave a comment with `REVIEW: [reason]`.
+- 🟡 Document every function declaration unless painfully simple/obvious. However, don't use JSDoc tags. Only use simple descriptions. You don't even really need to include examples unless they're small and/or help a lot. Most importantly, just document any quirks developers may need to know about when using it. Still use JSDoc comment block syntax though e.g. `/** */`
+- 🟡 For comments, if you're simply describing what a line does, use `//`. If you're documenting a variable or function, use JSDoc comment blocks `/** */`
+
+### Git
+
+- 🔴 Never perform Git writes unless explicitly instructed.
+- 🟡 If asked to commit, keep commit messages short (ideally ~10 words, never more than ~50).
+
+### Dependencies
+
+- 🔴 Always add dependencies using `bun add`.
+- 🔴 Do not manually edit `package.json` to add versions first; let Bun resolve the version automatically.
+- 🔴 After adding a **workspace dependency**, always run `bun install` so the workspace links correctly.
+
+### Tooling & Scaffolding
+
+- 🟡 Prefer using official CLI tools or generators over manually creating or editing files when possible.
+- ⚪ This applies especially to setup, scaffolding, and config files, where CLIs encode best practices.
+
+### Object & Value Handling
+
+- 🟡 Avoid unnecessary spreads (e.g. `{ ...obj }`).
+  - Confirm the spread is actually needed to create a new reference.
+- 🟡 Avoid manually re-listing all object properties (e.g. `{ x: a.x, y: a.y, z: a.z }`).
+  - Prefer object spread, or `R.pick` / `R.omit` when using Remeda.
+- 🟡 Avoid unnecessary defaults, coalescing, optional chaining, or conditions.
+  - Example: `x ?? 0` when `x: number`.
+
+### Conditionals
+
+- 🟡 Use the simplest check that is correct.
+- 🟡 Prefer truthy/falsy checks when appropriate.
+  - Example: `if (obj)` instead of `if (obj != null)` when `obj: Record<string, unknown> | null`.
+- 🟡 Avoid strict `===` / `!==` for nullish checks unless the distinction between `null` and `undefined` matters.
+  - Example: `if (str != null)` instead of `if (str !== undefined)` when `str: string | undefined`.

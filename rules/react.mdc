@@ -1,0 +1,36 @@
+# React Rules
+
+*Only applies in React projects.*
+
+### Priority Levels
+
+- 🔴 **Hard rule** — must always be followed. No exceptions without explicit approval.
+- 🟡 **Strong preference** — default behavior; deviate only with a clear reason.
+- ⚪ **Guideline** — situational; use judgment.
+
+### React Compiler
+
+- 🔴 Assume React Compiler is enabled unless the project explicitly states otherwise.
+- 🔴 Never use `useCallback`, `useMemo`, or `React.memo` — the compiler handles memoization.
+  - ⚪ Exception: wrapping a third-party library that breaks without manual memoization.
+
+### Modern React (19.2+)
+
+- 🟡 Use `ref` as a regular prop. `forwardRef` is no longer needed in React 19.
+- 🟡 Use `useEffectEvent` for stable event handlers in effects instead of fighting dependency arrays. It ships with React 19.2 — no external libs needed.
+- 🟡 Prefer the `use()` hook for reading promises and context in render.
+- 🟡 Use error boundaries to isolate failures in distinct UI sections.
+
+### Components & Hooks
+
+- 🟡 Keep components small; move non-UI logic into hooks.
+- 🟡 One component or hook per file unless trivial.
+- 🟡 Avoid `useEffect` whenever possible; prefer event-driven architecture.
+- 🔴 Always strictly follow the [Rules of React](https://react.dev/reference/rules)
+
+### Linting
+
+- ⚪ Rules you're allowed to globally disable in your linter config:
+	- Array index key warnings
+	- a11y rules
+- ⚪ If using shadcn, ignore the ui folder in your linter config — it'll commonly violate rules, but it's fine since it's proven code from another source.

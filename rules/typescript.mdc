@@ -1,0 +1,21 @@
+# TypeScript Rules
+
+### Priority Levels
+
+- 🔴 **Hard rule** — must always be followed. No exceptions without explicit approval.
+- 🟡 **Strong preference** — default behavior; deviate only with a clear reason.
+- ⚪ **Guideline** — situational; use judgment.
+
+### Type System
+
+- 🟡 Avoid explicit type annotations unless they materially improve readability. Prefer inference.
+- 🔴 Never use `any` unless explicitly approved and we are deliberately pushing TypeScript's limits. This should be extremely rare.
+- 🟡 If the type is genuinely unknown, prefer `unknown`.
+- 🟡 Avoid type casting. Only cast when strictly necessary to make something work, not as a convenience.
+- 🔴 Never manually redefine types that can be derived or imported. If a type exists elsewhere in the app or a library, import it.
+- 🟡 For values from untrusted or unknown sources, use Zod to validate at runtime and infer types (e.g. `JSON.parse`).
+- 🔴 Do not create `.d.ts` files for declaring modules.
+- 🟡 Design types to be as specific as possible as early (high) in the type graph as possible.
+- 🔴 Never use `as unknown as`. It is always wrong.
+- 🔴 Never use `@ts-expect-error`, `@ts-ignore`, or similar.
+- ⚪ One acceptable use-case of `any` is when you're using `infer` keyword or declaring generic functions, and you need to skip a generic parameter we don't care about. e.g. `type SomeType<T> = T extends ManyArgGeneric<any, any, infer U> ? U : never`. This is preferred over passing the specific types those arguments extend since this definition is unrelated to those specific types; thus, our `SomeType` definition won't break if args 1 and 2 of `ManyArgGeneric` change.
