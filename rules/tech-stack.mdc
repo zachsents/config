@@ -9,5 +9,5 @@
 - **Linting:** oxlint
 - **Formatting:** Prettier
 - **Styling:** TailwindCSS
-- **Component primitives:** shadcn/ui
+- **Component primitives:** shadcn/ui (Base UI variant)
 - **Authentication:** Better-auth
