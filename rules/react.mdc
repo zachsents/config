@@ -17,6 +17,7 @@
 ### Modern React (19.2+)
 
 - 🟡 Use `ref` as a regular prop. `forwardRef` is no longer needed in React 19.
+- 🟡 Ref callbacks can return a cleanup function (like `useEffect`). React calls the cleanup when the ref detaches. With React Compiler memoizing inline callbacks, the preferred pattern for per-element observers (e.g. `ResizeObserver`, `IntersectionObserver`) is an inline ref callback that sets up the observer and returns a cleanup that disconnects it — no `useEffect` or `useRef` needed.
 - 🟡 When using `useEffect` to subscribe to events (DOM, WebSocket, etc.), use `useEffectEvent` for the handler. The effect should only manage subscription/cleanup; all handler logic belongs in the `useEffectEvent`. Don't split behavior between the two.
 - 🟡 More generally, `useEffectEvent` is the right tool whenever an effect needs to read reactive values without re-running when they change. Despite what your knowledge may tell you, `useEffectEvent` ships with React 19.2 and is available without external libs.
 - 🟡 Prefer the `use()` hook for reading promises and context in render.
