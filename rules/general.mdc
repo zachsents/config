@@ -24,6 +24,15 @@
 - 🟡 Avoid deep nesting. Extract small, pure helpers when helpful.
 - 🟡 Be wary of variables that exist only due to iterative edits. Re-evaluate which variables actually need to exist and simplify aggressively.
 
+### Declarative Style
+
+- 🟡 Prefer declarative, expression-based code over imperative mutation. Build objects and arrays in a single expression rather than declaring an empty/partial value and conditionally mutating it.
+  - This is critical for type inference. Declarative construction lets TypeScript infer the full shape automatically, whereas imperative mutation (declare-then-assign) forces vague annotations like `Record<string, unknown>` that destroy downstream type safety.
+  - Use conditional spreads (`...(condition && { key: value })`) and ternaries for conditional properties.
+  - Use `Array.filter`, `.map`, `.flatMap`, etc. over imperative loops with `push`.
+- 🟡 When vanilla JS lacks the right utility, reach for Remeda (`R`). It provides well-typed functional utilities (`pipe`, `filter`, `map`, `groupBy`, `merge`, `pickBy`, etc.) that keep code declarative without sacrificing type safety. Remeda is available in nearly all of my projects.
+- 🟡 Prefer Remeda's `pipe` over chained native array methods (`.map().filter()`, etc.). Remeda fuses piped operations into a single loop via lazy evaluation, avoiding intermediate array allocations.
+
 ### Concurrency
 
 - 🟡 Use `Promise.all` when possible to speed things up.
